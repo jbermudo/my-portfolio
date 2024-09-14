@@ -1,35 +1,46 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from "react";
+import { BrowserRouter as Router, Link, useLocation } from "react-router-dom";
+import { Routes, Route } from "react-router";
+import Home from "./components/Home";
+import Contact from "./components/Contact";
 
-function App() {
-  const [count, setCount] = useState(0)
+const Navigation: React.FC = () => {
+  const location = useLocation();
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <nav className="fill">
+      <ul className="bg-black w-full text-white flex justify-center px-4 space-x-3 p-5 text-[20px] uppercase">
+        <li>
+          <Link
+            to="/"
+            className={`${location.pathname === "/" ? "active" : ""}`}
+          >
+            Home
+          </Link>
+        </li>
+        <li>
+          <Link
+            to="/contact"
+            className={`${location.pathname === "/contact" ? "active" : ""}`}
+          >
+            Contact
+          </Link>
+        </li>
+      </ul>
+    </nav>
+  );
+};
 
-export default App
+const App: React.FC = () => {
+  return (
+    <Router>
+      <Navigation />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/contact" element={<Contact />} />
+      </Routes>
+    </Router>
+  );
+};
+
+export default App;
